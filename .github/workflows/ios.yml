@@ -1,0 +1,41 @@
+# Compila LinguaPDF para iPhone en un Mac de GitHub (gratis en repos públicos;
+# en privados consume minutos de macOS). Genera un .ipa SIN firmar que se
+# instala con Sideloadly/AltStore (Apple ID gratuito) o se firma después.
+name: iOS (.ipa)
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+
+jobs:
+  build-ios:
+    runs-on: macos-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Dependencias
+        run: |
+          flutter pub get
+          cd ios && pod install --repo-update
+
+      - name: Compilar (sin firma)
+        run: flutter build ios --release --no-codesign
+
+      - name: Empaquetar .ipa
+        run: |
+          mkdir -p build/ipa/Payload
+          cp -R build/ios/iphoneos/Runner.app build/ipa/Payload/
+          cd build/ipa && zip -qr LinguaPDF-unsigned.ipa Payload
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: LinguaPDF-ios
+          path: build/ipa/LinguaPDF-unsigned.ipa
+          retention-days: 14

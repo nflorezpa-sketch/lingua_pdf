@@ -1,0 +1,12 @@
+en_es.db — Diccionario inglés→español de LinguaPDF
+
+Contenido derivado de Wiktionary en inglés (https://en.wiktionary.org),
+extraído con wiktextract (https://kaikki.org, Tatu Ylonen).
+
+Los textos de Wiktionary se distribuyen bajo la licencia
+Creative Commons Attribution-ShareAlike 4.0 (CC BY-SA 4.0)
+https://creativecommons.org/licenses/by-sa/4.0/
+y la GNU Free Documentation License (GFDL).
+
+Esta base de datos es una obra derivada y se distribuye bajo la misma licencia
+CC BY-SA 4.0. Se generó con tools/build_dictionary.py.
